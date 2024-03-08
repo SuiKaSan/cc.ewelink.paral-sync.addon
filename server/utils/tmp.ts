@@ -103,7 +103,7 @@ export async function updateSrcGatewayDeviceGroup(srcGatewayMac: string, deviceL
         return toResponse(1502);
     }
 
-    // logger.info(`[updateSrcGatewayDeviceGroup] updated device info ${JSON.stringify(deviceList)}`)
+    logger.info(`[updateSrcGatewayDeviceGroup] updated device info ${JSON.stringify(deviceList)}`)
 
     const groupItem = _.find(srcGatewayDeviceGroup, { srcGatewayMac });
     if (groupItem) {

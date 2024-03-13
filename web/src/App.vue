@@ -1,5 +1,8 @@
 <template>
     <RouterView />
+    <div class="add-on-version">
+        <span>{{ version ? `v${version}` : '' }}</span>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -9,6 +12,7 @@ import { useDeviceStore } from '@/store/device';
 import { useRouter } from 'vue-router';
 import { stepsList } from '@/api/ts/interface/IGateWay';
 import { useEtcStore } from '@/store/etc';
+import { version } from '@/config';
 const etcStore = useEtcStore();
 const router = useRouter();
 const deviceStore = useDeviceStore();
@@ -24,11 +28,11 @@ onMounted(() => {
     // 缓存+接口判断是不是第一次进入 Cache + interface to determine whether it is the first time to enter
     judgeIsFirstEnter();
 });
-/** 
-* 判断当前语言
-* Determine the current language
-*/
-const judgeLangue = () =>{
+/**
+ * 判断当前语言
+ * Determine the current language
+ */
+const judgeLangue = () => {
     let browserLanguage = window.location.search;
     if (!browserLanguage) {
         browserLanguage = navigator.language;
@@ -39,12 +43,12 @@ const judgeLangue = () =>{
         etcStore.languageChange('en-us');
     }
     // console.log(etcStore.language, '当前语言');
-}
+};
 
-/** 
-* 在全流程正常的情况下刷新页面要求停留在当前页面,此处调用先于接口
-* When the whole process is normal, refreshing the page requires staying on the current page. The interface is called here before
-*/
+/**
+ * 在全流程正常的情况下刷新页面要求停留在当前页面,此处调用先于接口
+ * When the whole process is normal, refreshing the page requires staying on the current page. The interface is called here before
+ */
 const keepPageInRefresh = () => {
     if ([stepsList.FIRST, stepsList.SECOND].includes(deviceStore.step)) {
         // console.log('keep page 1 when refresh');
@@ -56,11 +60,11 @@ const keepPageInRefresh = () => {
     }
 };
 
-/** 
-* 判断是否是第一次进入，第一次进入需要跳到第一步，其他的时候在列表上红字提示
-* Determine whether it is the first time to enter. If you enter for the first time, you need to jump to the first step. 
-* Otherwise, there will be a red text prompt on the list.
-*/
+/**
+ * 判断是否是第一次进入，第一次进入需要跳到第一步，其他的时候在列表上红字提示
+ * Determine whether it is the first time to enter. If you enter for the first time, you need to jump to the first step.
+ * Otherwise, there will be a red text prompt on the list.
+ */
 const judgeIsFirstEnter = async () => {
     // 缓存无数据直接跳转第一步 If there is no data in the cache, jump directly to the first step.
     if (!deviceStore.iHostList || deviceStore.iHostList.length < 1) {
@@ -100,3 +104,15 @@ const judgeIsFirstEnter = async () => {
     }
 };
 </script>
+
+<style scoped lang="scss">
+.add-on-version {
+    position: fixed;
+    bottom: 20px;
+    right: 24px;
+    span {
+        font-size: 14px;
+        color: #a1a1a1;
+    }
+}
+</style>

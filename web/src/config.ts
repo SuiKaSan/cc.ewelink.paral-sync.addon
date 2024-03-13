@@ -35,4 +35,4 @@ const sseUrl = isTestEnv() ? `//${NSPanelProIp}:8322/api/v1/sse` : '/api/v1/sse'
 
 console.log(`current version: ${version}`);
 
-export { apiUrl, appSecret, appId, env, sseUrl };
+export { apiUrl, appSecret, appId, env, sseUrl, version };
